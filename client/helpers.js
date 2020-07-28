@@ -3,7 +3,12 @@
 
 // getFavs is an axios get request to get data from db
 export const getFavs = (axios) => {
-  return axios.get('localhost:8080/fav');
+  return axios.get('http://localhost:8080/fav', {
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+    },
+  });
 };
 // link with show favs button so when a user clicks button it renders a list of 'fav synonyms'
 

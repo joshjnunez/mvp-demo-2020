@@ -3,7 +3,7 @@ import React from 'react';
 const Synonyms = ({ word, addFav }) => {
   console.log(word);
   return (
-    <li id="syn" onClick={() => addFav()}>
+    <li id={word} onClick={(e, id) => addFav(e, id)}>
       {word}
     </li>
   );

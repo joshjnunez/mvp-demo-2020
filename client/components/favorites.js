@@ -2,14 +2,13 @@ import React from 'react';
 
 import Synonyms from './synonyms.js';
 
-const WordsList = ({ word, definition, synonyms, addFav }) => {
+const Favorites = ({ favorites, addFav }) => {
+  console.log('made it to fav component');
   return (
     <div>
-      <h2>{word}</h2>
-      {definition}
-      <h5>Synonyms:</h5>
+      <h3>Favorites</h3>
       <ul>
-        {synonyms.map((word, idx) => {
+        {favorites.map((word, idx) => {
           console.log(word);
           return <Synonyms addFav={addFav} word={word} key={++idx} />;
         })}
@@ -18,4 +17,4 @@ const WordsList = ({ word, definition, synonyms, addFav }) => {
   );
 };
 
-export default WordsList;
+export default Favorites;
