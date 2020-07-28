@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import WordsList from './wordsList.js';
 import { callAPI } from '../callAPI.js';
+import { getFavs } from '../helpers.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -14,7 +15,12 @@ class App extends React.Component {
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    // // axios.post local host server
+    // getFavs(axios)
+    //   .then((data) => console.log('here is the data from db:', data))
+    //   .catch((err) => console.error(err));
+  }
 
   handleSearch(event) {
     callAPI(axios, event.target.value)
@@ -30,6 +36,20 @@ class App extends React.Component {
     console.log(event.target.value, 'has been searched');
   }
 
+  showFavs() {
+    console.log('showFavs has been clicked!!');
+    // axios.get
+  }
+
+  emptyFavs() {
+    console.log('emptyFavs has been clicked!!!');
+    //axios.post
+  }
+
+  addFav() {
+    console.log('has been added to favs!!');
+  }
+
   render() {
     const { word, definition, synonyms } = this.state;
     return (
@@ -43,9 +63,15 @@ class App extends React.Component {
           />
         </pre>
         <pre>
-          <button>Show Favorites</button> <button>Empty Favorites</button>
+          <button onClick={() => this.showFavs()}>Show Favorites</button>{' '}
+          <button onClick={() => this.emptyFavs()}>Empty Favorites</button>
         </pre>
-        <WordsList word={word} definition={definition} synonyms={synonyms} />
+        <WordsList
+          addFav={this.addFav}
+          word={word}
+          definition={definition}
+          synonyms={synonyms}
+        />
       </div>
     );
   }

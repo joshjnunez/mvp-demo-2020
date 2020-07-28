@@ -1,7 +1,11 @@
 import React from 'react';
 
-const Synonyms = ({ word }) => {
+const Synonyms = ({ word, addFav }) => {
   console.log(word);
-  return <li>{word}</li>;
+  return (
+    <li id="syn" onClick={() => addFav()}>
+      {word}
+    </li>
+  );
 };
 export default Synonyms;
