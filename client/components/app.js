@@ -4,7 +4,7 @@ import WordsList from './wordsList.js';
 import Favorites from './favorites.js';
 import { callAPI } from '../callAPI.js';
 import { getFavs } from '../helpers.js';
-import { render } from 'react-dom';
+// import '../styles.css';
 
 class App extends React.Component {
   constructor(props) {
@@ -17,6 +17,8 @@ class App extends React.Component {
       favorites: [],
       clicked: false,
     };
+    this.heardIt = this.heardIt.bind(this);
+    this.addFav = this.addFav.bind(this);
   }
 
   componentDidMount() {
@@ -96,12 +98,24 @@ class App extends React.Component {
     });
   }
 
+  heardIt(e, id) {
+    console.log(e.target.id, id, 'heard it!');
+    if (e.target.id === id.toString()) {
+      axios
+        .put('http://localhost:8080/update', {
+          heardIt: true,
+        })
+        .then((res) => console.log(res))
+        .catch((err) => console.error(err));
+    }
+  }
+
   render() {
     const { word, definition, synonyms, favorites, clicked } = this.state;
     if (clicked) {
       return (
         <div>
-          <Favorites favorites={favorites} />
+          <Favorites favorites={favorites} heardIt={this.heardIt} />
           <button onClick={() => this.goBack()}>Go Back To Home Page</button>
         </div>
       );

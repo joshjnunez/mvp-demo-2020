@@ -56,5 +56,9 @@ app.delete('/delete', (req, res) => {
   // res.json('test');
 });
 
+app.put('/update', (req, res) => {
+  console.log(req.body);
+});
+
 // app.get('/', (req, res) => res.sendFile(`${root}/index.html`));
 app.listen(PORT, () => console.log(`Server is listening on ${PORT}`));
