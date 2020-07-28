@@ -25,7 +25,9 @@ const favSchema = new Schema({
 const Fav = mongoose.model('Fav', favSchema);
 
 app.get('/fav', (req, res) => {
-  res.send('GET data from DB');
+  Fav.find({}).then((results) => {
+    res.send(JSON.stringify(results));
+  });
 });
 
 app.post('/postFav', (req, res) => {
@@ -36,6 +38,21 @@ app.post('/postFav', (req, res) => {
 
   fav.save();
   res.statusCode = 201;
+  // res.json('test');
+});
+app.delete('/delete', (req, res) => {
+  console.log(req.body, 'data has been posted to DB');
+
+  Fav.deleteMany({}, (err) => {
+    if (err) {
+      res.statusCode(500);
+      res.send('Could not delete favorites from DB');
+    } else {
+      res.status(200);
+      res.send('Favorites deleted');
+    }
+  });
+  // res.statusCode = 201;
   // res.json('test');
 });
 

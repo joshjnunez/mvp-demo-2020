@@ -21,10 +21,6 @@ class App extends React.Component {
 
   componentDidMount() {
     // // axios.post local host server
-    // getFavs(axios)
-    //   .then((data) => console.log('here is the data from db:', data))
-    //   .catch((err) => console.error(err));
-    const data = 'DATA IS HERE';
   }
 
   handleSearch(event) {
@@ -44,15 +40,35 @@ class App extends React.Component {
   showFavs() {
     console.log('showFavs has been clicked!!');
     // axios.get
-    this.setState({
-      favorites: ['these', 'are', 'my', 'favorites'],
-      clicked: !this.state.clicked,
+    getFavs(axios).then((data) => {
+      console.log(data);
+      const synArr = data.data.map((word) => {
+        return word.synonym;
+      });
+      console.log(synArr);
+      this.setState({
+        favorites: synArr,
+        clicked: !this.state.clicked,
+      });
     });
   }
 
   emptyFavs() {
     console.log('emptyFavs has been clicked!!!');
     //axios.delete ???
+    axios
+      .delete(
+        'http://localhost:8080/delete',
+        { data: {} },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+          },
+        }
+      )
+      .then(() => console.log('it worked'))
+      .catch((err) => console.error('error:', err));
   }
 
   addFav(event) {
