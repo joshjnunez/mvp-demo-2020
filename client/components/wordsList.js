@@ -16,7 +16,7 @@ const WordsList = ({ word, definition, synonyms }) => {
       <ul>
         {synonyms.map((word) => {
           console.log(word);
-          return <Synonyms word={word} key={synonyms[word]} />;
+         return <Synonyms word={word} key={synonyms[word]}/>
         })}
       </ul>
     </div>
