@@ -2,10 +2,10 @@
   "name": "mvp-demo-2020",
   "version": "1.0.0",
   "description": "MVP sprint completed at Operation Spark",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon server.js",
+    "server": "nodemon ./server/server.js",
     "client": "webpack-dev-server --mode development --open --hot"
   },
   "repository": {
@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/joshjnunez/mvp-demo-2020#readme",
   "dependencies": {
+    "axios": "^0.19.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mongoose": "^5.9.25",
