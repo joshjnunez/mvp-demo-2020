@@ -100,14 +100,36 @@ class App extends React.Component {
 
   heardIt(e, id) {
     console.log(e.target.id, id, 'heard it!');
+    console.log(e.target.getAttribute('word'));
     if (e.target.id === id.toString()) {
       axios
-        .put('http://localhost:8080/update', {
-          heardIt: true,
+        .post('http://localhost:8080/update', {
+          synonym: e.target.getAttribute('word'),
+          heard: true,
         })
         .then((res) => console.log(res))
         .catch((err) => console.error(err));
     }
+  }
+
+  getWordsHeard() {
+    axios
+      .get('http://localhost:8080/wordsHeard', {
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+      })
+      .then((data) => {
+        console.log(data);
+        const heardArr = data.data.map((word) => {
+          return word.synonym;
+        });
+        console.log(heardArr);
+        this.setState({
+          favorites: heardArr,
+        });
+      });
   }
 
   render() {
@@ -117,6 +139,9 @@ class App extends React.Component {
         <div>
           <Favorites favorites={favorites} heardIt={this.heardIt} />
           <button onClick={() => this.goBack()}>Go Back To Home Page</button>
+          <button onClick={() => this.getWordsHeard()}>
+            Get Words Heard In Public
+          </button>
         </div>
       );
     }

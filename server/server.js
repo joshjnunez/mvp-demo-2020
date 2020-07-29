@@ -20,12 +20,21 @@ mongoose
 
 const favSchema = new Schema({
   synonym: String,
+  heard: Boolean,
 });
 
 const Fav = mongoose.model('Fav', favSchema);
 
 app.get('/fav', (req, res) => {
   Fav.find({}).then((results) => {
+    console.log(results, 'results form get');
+    res.send(JSON.stringify(results));
+  });
+});
+
+app.get('/wordsHeard', (req, res) => {
+  Fav.find({ heard: true }).then((results) => {
+    console.log(results, 'results in wordsHeard');
     res.send(JSON.stringify(results));
   });
 });
@@ -34,6 +43,7 @@ app.post('/postFav', (req, res) => {
   console.log(req.body.data, 'data has been posted to DB');
   const fav = new Fav({
     synonym: req.body.data,
+    heard: false,
   });
 
   fav.save();
@@ -56,8 +66,19 @@ app.delete('/delete', (req, res) => {
   // res.json('test');
 });
 
-app.put('/update', (req, res) => {
-  console.log(req.body);
+app.post('/update', (req, res) => {
+  console.log(req.body.synonym);
+  const value1 = req.body.synonym;
+  const value2 = req.body.heard;
+  Fav.findOneAndUpdate({ synonym: value1 }, { heard: value2 },
+    (err, result) => {
+      if (err) {
+        res.send(err);
+      } else {
+        console.log('successful find and UPDATE!');
+        res.send(result);
+      }
+    });
 });
 
 // app.get('/', (req, res) => res.sendFile(`${root}/index.html`));
